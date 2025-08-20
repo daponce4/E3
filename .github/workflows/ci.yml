@@ -24,8 +24,7 @@ jobs:
     - name: Lint code
       run: npm run lint
 
-    - name: Run tests with coverage
-      run: npm run test
-
-    - name: Check coverage threshold
-      run: npm run check-coverage
+    - name: Run tests with coverage and check threshold
+      run: |
+        npm run test
+        npm run check-coverage
