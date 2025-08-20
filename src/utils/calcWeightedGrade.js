@@ -9,7 +9,7 @@ function calcWeightedGrade(items) {
   if (!Array.isArray(items)) {
     throw new TypeError('items debe ser un arreglo');
   }
-  const sumW = items.reduce((acc, { weight ) => {
+  const sumW = items.reduce((acc, { weight }) => {
     if (typeof weight !== 'number' || !isFinite(weight)) {
       throw new TypeError('weight debe ser un número finito');
     }
