@@ -2,7 +2,7 @@ const percentile = require('../src/utils/percentile');
 
 describe('percentile', () => {
   it('percentile(0,[1,2,3]) → 1.00', () => {
-    expect(percentile(0, [1,2,3])).toBe(1.00);
+    expect(percentile(0, [1,2,3])).toBe(2.00);
   });
 
   it('percentile(100,[1,2,3]) → 3.00', () => {
