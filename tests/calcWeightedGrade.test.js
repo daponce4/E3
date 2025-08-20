@@ -19,4 +19,17 @@ describe('calcWeightedGrade', () => {
   it('lanza TypeError si score no es número', () => {
     expect(() => calcWeightedGrade([{ score: '80', weight: 1 }])).toThrow(TypeError);
   });
+  // tests/calcWeightedGrade.test.js
+  it('lanza RangeError si algún score está fuera de [0,100]', () => {
+  expect(() => calcWeightedGrade([{ score: -5, weight: 1 }]))
+    .toThrow(RangeError);
+  expect(() => calcWeightedGrade([{ score: 105, weight: 1 }]))
+    .toThrow(RangeError);
+  });
+  it('lanza RangeError si suma de weights difiere >0.001 de 1', () => {
+   expect(() => calcWeightedGrade([
+    { score: 50, weight: 0.5 },
+    { score: 50, weight: 0.49 }
+  ])).toThrow(RangeError);
+  });
 });
