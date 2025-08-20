@@ -1,25 +1,36 @@
+/**
+ * calcWeightedGrade(items)
+ * items: Array<{ score: number, weight: number }>
+ * - suma de weights debe ser 1 ±0.001, sino RangeError
+ * - score en [0,100], weight en [0,1]
+ * - devuelve nota en 0–100 con 2 decimales
+ */
 function calcWeightedGrade(items) {
-  if (!Array.isArray(items)) throw new TypeError("items debe ser un arreglo");
-
-  let totalWeight = 0;
-  let totalScore = 0;
-
-  for (const item of items) {
-    if (typeof item.score !== "number" || item.score < 0 || item.score > 100) {
-      throw new TypeError("score debe ser número entre 0 y 100");
+  if (!Array.isArray(items)) {
+    throw new TypeError('items debe ser un arreglo');
+  }
+  const sumW = items.reduce((acc, { weight }) => {
+    if (typeof weight !== 'number' || !isFinite(weight)) {
+      throw new TypeError('weight debe ser un número finito');
     }
-    if (typeof item.weight !== "number" || item.weight < 0 || item.weight > 1) {
-      throw new TypeError("weight debe ser número entre 0 y 1");
-    }
-    totalWeight += item.weight;
-    totalScore += item.score * item.weight;
+    return acc + weight;
+  }, 0);
+
+  if (Math.abs(sumW - 1) > 0.001) {
+    throw new RangeError(`La suma de weights debe ser 1 (±0.001), pero es ${sumW}`);
   }
 
-  if (Math.abs(totalWeight - 1) > 0.001) {
-    throw new RangeError("La suma de los pesos debe ser 1 ±0.001");
-  }
+  const total = items.reduce((acc, { score, weight }) => {
+    if (typeof score !== 'number' || !isFinite(score)) {
+      throw new TypeError('score debe ser un número finito');
+    }
+    if (score < 0 || score > 100) {
+      throw new RangeError('score debe estar entre 0 y 100');
+    }
+    return acc + score * weight;
+  }, 0);
 
-  return Number(totalScore.toFixed(2));
+  return Number(total.toFixed(2));
 }
 
 module.exports = calcWeightedGrade;
